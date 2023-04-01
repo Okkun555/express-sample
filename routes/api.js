@@ -2,7 +2,13 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.send({ message: "Hello world" });
+  let message = req.query.message;
+
+  if (message === "") {
+    res.status(400);
+    message = "Empty Query Parameter";
+  }
+  res.send({ message });
 });
 
 router.use(express.json());
