@@ -2,11 +2,19 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
+  res.setHeader("X-Timestamp", Date.now());
+
   let message = req.query.message;
+
+  const lang = req.headers["x-language"];
 
   if (message === "") {
     res.status(400);
-    message = "Empty Query Parameter";
+    if (lang === "en") {
+      message = "Empty Query Parameter";
+    } else {
+      message = "クエリパラメータが空です";
+    }
   }
   res.send({ message });
 });
