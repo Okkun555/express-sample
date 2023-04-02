@@ -3,9 +3,25 @@ const api = require("./routes/api");
 const https = require("https");
 const fs = require("fs");
 const app = express();
-const port = 3001;
+const port = 80;
 
-app.use(express.static("public"));
+// HTTPサーバへアクセス時、HTTPSサーバへリダイレクト
+app.use((req, res, next) => {
+  if (req.secure) {
+    next();
+  } else {
+    res.redirect(`https://${req.hostname}`);
+  }
+});
+
+app.use(
+  express.static("public", {
+    setHeaders: (res, path, stat) => {
+      res.header("X-Frame-Options", "SAMEORIGIN");
+      res.header("Strict-Transport-Security", "max-age=60;");
+    },
+  })
+);
 app.use("/api", api);
 
 app.get("/", (req, res, next) => {
