@@ -3,7 +3,7 @@ const api = require("./routes/api");
 const https = require("https");
 const fs = require("fs");
 const app = express();
-const port = 80;
+const port = 3001;
 
 // HTTPサーバへアクセス時、HTTPSサーバへリダイレクト
 app.use((req, res, next) => {
