@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>XSS検証</title>
+    </head>
+    <body>
+        <h1>XSS検証</h1>
+        <div id="result"></div>
+        <a id="link" href="#">リンクをクリック</a>
+
+        <script>
+            // 脆弱性のあるコード
+            // http://localhost:3001/xss.html?message=<script>alert('XSS')>でアラートが起動
+            // const url = new URL(location.href);
+            // const message = url.searchParams.get('message');
+            // if (message !== null) {
+            //     document.querySelector('#result').innerHTML = message;
+            // }
+
+            // 脆弱性のないコード
+            const url = new URL(location.href);
+            const message = url.searchParams.get('message');
+            if (message !== null) {
+                const text = document.createTextNode(message);
+                document.querySelector('#result').appendChild(text);
+            }
+        </script>
+    </body>
+</html>
