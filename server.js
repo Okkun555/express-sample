@@ -1,5 +1,6 @@
 const express = require("express");
 const api = require("./routes/api");
+const csrf = require("./routes/csrf");
 const https = require("https");
 const fs = require("fs");
 const app = express();
@@ -23,6 +24,7 @@ app.use(
   })
 );
 app.use("/api", api);
+app.use("/csrf", csrf);
 
 app.get("/", (req, res, next) => {
   res.end("Top Page");
